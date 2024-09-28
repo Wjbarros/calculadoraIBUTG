@@ -251,13 +251,13 @@
 
         <div class="imagem">
             <h2>Quadro Nº 1 - Regime de Trabalho e Tipo de Atividade</h2>
-            <img src="Regime de Trabalho.jpg" alt="Quadro Nº 1 - Regime de Trabalho">
+            <img src="Imagens/Regime de Trabalho.jpg" alt="Quadro Nº 1 - Regime de Trabalho">
 
             <h2>Quadro Nº 2 - Limite de Tolerância</h2>
-            <img src="Limite de Tolerância.png" alt="Quadro Nº 2 - Limite de Tolerância">
+            <img src="Imagens/Limite de Tolerância.png" alt="Quadro Nº 2 - Limite de Tolerância">
 
             <h2>Quadro Nº 3 - Taxas Metabólicas por Tipo de Atividade</h2>
-            <img src="Taxa Metabólica.png" alt="Quadro Nº 3 - Taxas Metabólicas por Tipo de Atividade">
+            <img src="Imagens/Taxa Metabólica.png" alt="Quadro Nº 3 - Taxas Metabólicas por Tipo de Atividade">
         </div>
         <footer>
             <p>&copy; 2024 WJBarros. Todos os direitos reservados.</p>
@@ -265,6 +265,37 @@
     </div>
 
     <script>
+        // Definição dos limites para cada tipo de atividade
+        const LIMITES = {
+            leve: [30.0, 30.69, 31.49, 32.2],
+            moderada: [26.7, 28.0, 29.49, 31.1],
+            pesada: [25.0, 25.99, 27.99, 30.0]
+        };
+
+        // Função auxiliar para capitalizar a primeira letra
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+        // Função para verificar o regime de trabalho com base no IBUTG calculado e no tipo de atividade
+        function verificarRegimeTrabalho(ibutg, limites, tipoAtividade) {
+            let mensagem = '';
+
+            if (ibutg <= limites[0]) {
+                mensagem = `Ótimo! O ambiente está ideal para trabalho contínuo.`;
+            } else if (ibutg > limites[0] && ibutg <= limites[1]) {
+                mensagem = `Regime de trabalho sugerido: 45 minutos de trabalho e 15 minutos de descanso.`;
+            } else if (ibutg > limites[1] && ibutg <= limites[2]) { 
+                mensagem = `Regime de trabalho sugerido: 30 minutos de trabalho e 30 minutos de descanso.`;
+            } else if (ibutg > limites[2] && ibutg <= limites[3]) { 
+                mensagem = `Regime de trabalho sugerido: 15 minutos de trabalho e 45 minutos de descanso.`;
+            } else {
+                mensagem = `Atenção! Não é permitido o trabalho sem a adoção de medidas adequadas de controle.`;
+            }
+
+            return `Tipo de Atividade: ${capitalizeFirstLetter(tipoAtividade)}.<br>${mensagem}<br><strong>IBUTG Calculado:</strong> ${ibutg.toFixed(1)} °C`;
+        }
+
         document.getElementById('calorForm').addEventListener('submit', function (event) {
             event.preventDefault();
 
@@ -322,23 +353,28 @@
             }
 
             // Converter tempos de minutos para segundos
-            const Tt = parseInt(TtInput, 10) * 60; // Minutos para segundos
-            const Td = parseInt(TdInput, 10) * 60; // Minutos para segundos
+            const Tt = parseFloat(TtInput) * 60; // Minutos para segundos
+            const Td = parseFloat(TdInput) * 60; // Minutos para segundos
 
-            // Cálculo do IBUTG
-            let ibutg = ((ibutgt * Tt) + (ibutgd * Td)) / (Tt + Td);
-            
-            let resultadoTexto = '';
-            if (atividade === 'leve') {
-                resultadoTexto = verificarRegimeTrabalho(ibutg, [30.0, 30.1, 30.7, 31.5], [31.5, 32.2], 'Leve');
-            } else if (atividade === 'moderada') {
-                resultadoTexto = verificarRegimeTrabalho(ibutg, [26.7, 28.0, 28.1, 29.5], [29.5, 31.1], 'Moderada');
-            } else if (atividade === 'pesada') {
-                resultadoTexto = verificarRegimeTrabalho(ibutg, [25.0, 25.9, 26.0, 28.0], [28.0, 30.0], 'Pesada');
+            // Prevenção de Divisão por Zero
+            if ((Tt + Td) === 0) {
+                exibirErro('Tt', 'A soma do Tempo Total de Trabalho e Descanso deve ser maior que zero.');
+                isValid = false;
+                return;
             }
 
+            // Cálculo do IBUTG
+            const ibutg = ((ibutgt * Tt) + (ibutgd * Td)) / (Tt + Td);
             
-            resultadoTexto += `<br><strong>IBUTG Calculado:</strong> ${ibutg.toFixed(2)} °C`;
+            // Verificar regime de trabalho com base no tipo de atividade
+            const limitesAtividade = LIMITES[atividade];
+            let resultadoTexto = '';
+
+            if (limitesAtividade) {
+                resultadoTexto = verificarRegimeTrabalho(ibutg, limitesAtividade, atividade);
+            } else {
+                resultadoTexto = `Tipo de atividade desconhecido.`;
+            }
 
             exibirResultado(resultadoTexto);
         });
@@ -370,20 +406,6 @@
             resultadoElement.innerHTML = mensagem;
         }
 
-        // Função para verificar o regime de trabalho com base no IBUTG calculado e no tipo de atividade
-        function verificarRegimeTrabalho(ibutg, limites, faixas, tipoAtividade) {
-            if (ibutg <= limites[0]) {
-                return `O ambiente está ideal para trabalho contínuo.`;
-            } else if (ibutg >= limites[1] && ibutg <= limites[2]) {
-                return `Regime de trabalho sugerido: 45 minutos de trabalho e 15 minutos de descanso.`;
-            } else if (ibutg > limites[2] && ibutg <= limites[3]) { // Alteração de >= para >
-                return `Regime de trabalho sugerido: 30 minutos de trabalho e 30 minutos de descanso.`;
-            } else if (ibutg > faixas[0] && ibutg <= faixas[1]) { // Alteração de >= para >
-                return `Regime de trabalho sugerido: 15 minutos de trabalho e 45 minutos de descanso.`;
-            } else {
-                return `Atenção! Não é permitido o trabalho sem a adoção de medidas adequadas de controle.`;
-            }
-        }
     </script>
     
 </body>
