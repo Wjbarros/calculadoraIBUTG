@@ -227,13 +227,13 @@
 
             <div class="form-group">
                 <label for="Tt">Tempo Total Trabalho (minutos):</label>
-                <input type="number" id="Tt" name="Tt" placeholder="Ex: 60 minutos" min="0" required>
+                <input type="number" id="Tt" name="Tt" placeholder="Ex: 30 minutos" min="0" required>
                 <div class="error-message" id="TtError">Por favor, insira um valor válido para o Tempo Total de Trabalho.</div>
             </div>
 
             <div class="form-group">
                 <label for="ibutgd">IBUTGd (°C):</label>
-                <input type="number" id="ibutgd" name="ibutgd" placeholder="Ex: 30.0 °C" step="0.1" min="0" required>
+                <input type="number" id="ibutgd" name="ibutgd" placeholder="Ex: 25.5 °C" step="0.1" min="0" required>
                 <div class="error-message" id="ibutgdError">Por favor, insira um valor válido para IBUTGd.</div>
             </div>
             <div class="form-group">
@@ -381,7 +381,7 @@
             } else if (ibutg > faixas[0] && ibutg <= faixas[1]) { // Alteração de >= para >
                 return `Regime de trabalho sugerido: 15 minutos de trabalho e 45 minutos de descanso.`;
             } else {
-                return `Não é permitido o trabalho sem a adoção de medidas adequadas de controle.`;
+                return `Atenção! Não é permitido o trabalho sem a adoção de medidas adequadas de controle.`;
             }
         }
     </script>
