@@ -18,7 +18,7 @@
         }
 
         .container {
-            max-width: 690px;
+            max-width: 710px;
             margin: auto;
             background: #0000CD;
             padding: 30px;
@@ -31,7 +31,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 05px;
+            gap: 20px; /* Espaçamento entre imagens */
             max-width: 100%;
             margin: auto;
         }
@@ -71,10 +71,10 @@
         input[type="number"],
         select {
             width: 100%;
-            padding: 8px 12px;
+            padding: 8px 9px;
             border: 1px solid black;
             border-radius: 4px;
-            font-size: 16px;
+            font-size: 15px;
         }
 
         input[type="number"].error,
@@ -124,13 +124,20 @@
         /* Para Tablets (largura até 768px) */
         @media (max-width: 768px) {
             body {
-                padding: 15px;
+                padding: 10px;
             }
 
             .container {
-                padding: 20px;
+                padding: 8px;
             }
-
+            
+            input[type="number"],
+            select {
+                width: 100%;
+                padding: 8px 2px;                              
+                font-size: 10.4px;
+            }
+         
             h1 {
                 font-size: 28px;
             }
@@ -149,53 +156,7 @@
             }
         }
 
-        /* Para Smartphones (largura até 480px) */
-        @media (max-width: 480px) {
-            body {
-                padding: 10px;
-            }
 
-            .container {
-                padding: 15px;
-            }
-
-            h1 {
-                font-size: 24px;
-            }
-
-            h2 {
-                font-size: 16px;
-            }
-
-            label {
-                font-size: 14px;
-            }
-
-            input[type="number"],
-            select {
-                padding: 6px 10px;
-                font-size: 14px;
-            }
-
-            button {
-                font-size: 18px;
-                padding: 8px;
-            }
-
-            .resultado {
-                font-size: 20px;
-            }
-
-            footer {
-                margin-top: 20px;
-                font-size: 14px;
-            }
-
-            .imagem img {
-                width: 100%;
-                height: auto;
-            }
-        }
     </style>
 </head>
 <body>
@@ -215,7 +176,25 @@
 
             <div class="form-group">
                 <label for="Mt">Taxa de Metabolismo do Trabalho (Kcal/h):</label>
-                <input type="number" id="Mt" name="Mt" placeholder="Ex: 150 Kcal/h" min="0" step="0.1" required>
+                <select id="Mt" name="Mt" required>
+                    <option value="">Selecione</option>
+                    <optgroup label="Trabalho Leve">
+                        <option value="125">Sentado, movimentos moderados com braços e tronco: 125 Kcal/h</option>
+                        <option value="150">Sentado, movimentos moderados com braços e pernas: 150 Kcal/h</option>
+                        <option value="150">De pé, trabalho leve, em máquina ou bancada, principalmente com os braços: 150 Kcal/h</option>                     
+                    </optgroup>
+                    <optgroup label="Trabalho Moderado">
+                        <option value="180">Sentado, movimentos vigorosos com braços e pernas: 180 Kcal/h</option>
+                        <option value="175">De pé, trabalho leve em máquina ou bancada, com alguma movimentação: 175 Kcal/h</option>
+                        <option value="220">De pé, trabalho moderado em máquina ou bancada, com alguma movimentação: 220 Kcal/h</option>
+                        <option value="230">Em movimento, trabalho moderado de levantar ou empurrar: 230 Kcal/h</option>
+                    </optgroup>
+        
+                    <optgroup label="Trabalho Pesado">
+                        <option value="440">Trabalho intermitente de levantar, empurrar ou arrastar pesos: 440 Kcal/h</option>
+                        <option value="550">Trabalho fatigante: 550 Kcal/h</option>
+                    </optgroup>
+                </select>
                 <div class="error-message" id="MtError">Por favor, insira um valor válido para a Taxa de Metabolismo do Trabalho.</div>
             </div>
             
@@ -226,7 +205,7 @@
             </div>
 
             <div class="form-group">
-                <label for="Tt">Tempo Regime de Trabalho (minutos):</label>
+                <label for="Tt">Tempo Total Trabalho (minutos):</label>
                 <input type="number" id="Tt" name="Tt" placeholder="Ex: 30 minutos" min="0" required>
                 <div class="error-message" id="TtError">Por favor, insira um valor válido para o Tempo Total de Trabalho.</div>
             </div>
@@ -237,7 +216,7 @@
                 <div class="error-message" id="ibutgdError">Por favor, insira um valor válido para IBUTGd.</div>
             </div>
             <div class="form-group">
-                <label for="Td">Tempo Regime de Descanso (minutos):</label>
+                <label for="Td">Tempo Total Descanso (minutos):</label>
                 <input type="number" id="Td" name="Td" placeholder="Ex: 30 minutos" min="0" required>
                 <div class="error-message" id="TdError">Por favor, insira um valor válido para o Tempo Total de Descanso.</div>
             </div>
@@ -251,13 +230,13 @@
 
         <div class="imagem">
             <h2>Quadro Nº 1 - Regime de Trabalho e Tipo de Atividade</h2>
-            <img src="Regime de Trabalho.jpg" alt="Quadro Nº 1 - Regime de Trabalho">
+            <img src="Imagens/Regime de Trabalho.jpg" alt="Quadro Nº 1 - Regime de Trabalho">
 
             <h2>Quadro Nº 2 - Limite de Tolerância</h2>
-            <img src="Limite de Tolerância.png" alt="Quadro Nº 2 - Limite de Tolerância">
+            <img src="Imagens/Limite de Tolerância.png" alt="Quadro Nº 2 - Limite de Tolerância">
 
             <h2>Quadro Nº 3 - Taxas Metabólicas por Tipo de Atividade</h2>
-            <img src="Taxa Metabólica.png" alt="Quadro Nº 3 - Taxas Metabólicas por Tipo de Atividade">
+            <img src="Imagens/Taxa Metabólica.png" alt="Quadro Nº 3 - Taxas Metabólicas por Tipo de Atividade">
         </div>
         <footer>
             <p>&copy; 2024 WJBarros. Todos os direitos reservados.</p>
@@ -365,7 +344,7 @@
 
             // Cálculo do IBUTG
             const ibutg = ((ibutgt * Tt) + (ibutgd * Td)) / (Tt + Td);
-            
+
             // Verificar regime de trabalho com base no tipo de atividade
             const limitesAtividade = LIMITES[atividade];
             let resultadoTexto = '';
