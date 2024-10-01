@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Estresse Térmico</title>
     <style>
-        * {
-    box-sizing: border-box;
+        * {                                        
+            box-sizing: border-box;
         }
 
         body {
@@ -119,6 +119,13 @@
             margin-top: 30px;
         }
 
+        
+        .form-group select#Mt {
+            height: auto; 
+            max-height: 200px; 
+            overflow-y: auto; 
+        }
+
         /* Para Tablets (largura até 768px) */
         @media (max-width: 768px) {
             body {
@@ -128,7 +135,13 @@
             .container {
                 padding: 20px;
             }
-                  
+            
+            input[type="number"],
+            select {
+                padding: 8px 2px;                              
+                font-size: 14px; /* Aumentar legibilidade */
+            }
+        
             h1 {
                 font-size: 28px;
             }
@@ -268,13 +281,13 @@
 
         <div class="imagem">
             <h2>Quadro Nº 1 - Regime de Trabalho e Tipo de Atividade</h2>
-            <img src="Regime de Trabalho.jpg" alt="Quadro Nº 1 - Regime de Trabalho">
+            <img src="Imagens/Regime de Trabalho.jpg" alt="Quadro Nº 1 - Regime de Trabalho">
 
             <h2>Quadro Nº 2 - Limite de Tolerância</h2>
-            <img src="Limite de Tolerância.png" alt="Quadro Nº 2 - Limite de Tolerância">
+            <img src="Imagens/Limite de Tolerância.png" alt="Quadro Nº 2 - Limite de Tolerância">
 
             <h2>Quadro Nº 3 - Taxas Metabólicas por Tipo de Atividade</h2>
-            <img src="Taxa Metabólica.png" alt="Quadro Nº 3 - Taxas Metabólicas por Tipo de Atividade">
+            <img src="Imagens/Taxa Metabólica.png" alt="Quadro Nº 3 - Taxas Metabólicas por Tipo de Atividade">
         </div>
         <footer>
             <p>&copy; 2024 WJBarros. Todos os direitos reservados.</p>
@@ -427,6 +440,7 @@
     
 </body>
 </html>
+
 
 
 
