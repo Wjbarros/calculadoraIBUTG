@@ -21,7 +21,7 @@
             max-width: 800px;
             margin: auto;
             background: #0000CD;
-            padding: 30px;
+            padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             color: white;
@@ -36,8 +36,17 @@
             margin: auto;
         }
 
-        .imagem img {
-            width: 100%;
+        .info-ajuste {
+            text-align: center;
+            
+            color: white;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+       .imagem img {
+            max-width: 700px;  
+            width: 100%;      
             height: auto;
             display: block;
             margin: 0 auto;
@@ -122,7 +131,8 @@
         
         .form-group select#Mt {
             height: auto; 
-            max-height: 200px;  
+            max-height: 200px; 
+           
         }
 
         select {
@@ -141,7 +151,7 @@
             }
            
             select {
-                font-size: 9px; 
+                font-size: 14px; 
                 padding: 8px; 
             }
 
@@ -184,7 +194,7 @@
             }
 
             select {
-                font-size: 6px; 
+                font-size: 12px; 
                 padding: 6px; 
             }
 
@@ -241,231 +251,190 @@
         <h1>Calculadora de Estresse Térmico</h1>
         <form id="calorForm" novalidate>
             <div class="form-group">
-                <label for="atividade">Tipo de Atividade:</label>
-                <select id="atividade" name="atividade" required>
-                    <option value="">Selecione</option>
-                    <option value="leve">Leve</option>
-                    <option value="moderada">Moderada</option>
-                    <option value="pesada">Pesada</option>
-                </select>
-                <div class="error-message" id="atividadeError">Por favor, selecione o tipo de atividade.</div>
-            </div>
-
-            <div class="form-group">
-                <label for="Mt">Taxa de Metabolismo do Trabalho (Kcal/h):</label>
+                <label for="Mt">Taxa de Metabolismo do Trabalho (W):</label>
                 <select id="Mt" name="Mt" required>
                     <option value="">Selecione</option>
                     <optgroup label="Trabalho Leve">
-                        <option value="125">Sentado, movimentos moderados com braços e tronco: 125 Kcal/h</option>
-                        <option value="150">Sentado, movimentos moderados com braços e pernas: 150 Kcal/h</option>
-                        <option value="150">De pé, trabalho leve, em máquina ou bancada, principalmente com os braços: 150 Kcal/h</option>                     
+                        <option value="153">Trabalho leve com as mãos: 153 W</option>
+                        <option value="189">Trabalho leve com um braço: 189 W</option>
+                        <option value="243">Trabalho leve com os dois braços: 243 W</option>
+                        <option value="351">Trabalho leve com o corpo: 351 W</option>
                     </optgroup>
                     <optgroup label="Trabalho Moderado">
-                        <option value="180">Sentado, movimentos vigorosos com braços e pernas: 180 Kcal/h</option>
-                        <option value="175">De pé, trabalho leve em máquina ou bancada, com alguma movimentação: 175 Kcal/h</option>
-                        <option value="220">De pé, trabalho moderado em máquina ou bancada, com alguma movimentação: 220 Kcal/h</option>
-                        <option value="230">Em movimento, trabalho moderado de levantar ou empurrar: 230 Kcal/h</option>
+                        <option value="180">Trabalho moderado com as mãos: 180 W</option>
+                        <option value="225">Trabalho moderado com um braço: 225 W</option>
+                        <option value="279">Trabalho moderado com os dois braços: 279 W</option>
+                        <option value="468">Trabalho moderado com o corpo: 468 W</option>
                     </optgroup>
-        
                     <optgroup label="Trabalho Pesado">
-                        <option value="440">Trabalho intermitente de levantar, empurrar ou arrastar pesos: 440 Kcal/h</option>
-                        <option value="550">Trabalho fatigante: 550 Kcal/h</option>
+                        <option value="198">Trabalho pesado com as mãos: 198 W</option>
+                        <option value="261">Trabalho pesado com um braço: 261 W</option>
+                        <option value="315">Trabalho pesado com os dois braços: 315 W</option>
+                        <option value="630">Trabalho pesado com o corpo: 630 W</option>
                     </optgroup>
                 </select>
                 <div class="error-message" id="MtError">Por favor, insira um valor válido para a Taxa de Metabolismo do Trabalho.</div>
             </div>
             
             <div class="form-group">
-                <label for="ibutgt">IBUTGt (°C):</label>
-                <input type="number" id="ibutgt" name="ibutgt" placeholder="Ex: 25.5 °C" step="0.1" min="0" required>
-                <div class="error-message" id="ibutgtError">Por favor, insira um valor válido para IBUTGt.</div>
+                <label>IBUTGt (°C)</label>
+                <input type="number" id="ibutgt" step="0.1" required>
             </div>
 
             <div class="form-group">
-                <label for="Tt">Tempo de Medição Ambiente de Trabalho (minutos):</label>
-                <input type="number" id="Tt" name="Tt" placeholder="Ex: 30 minutos" min="0" required>
-                <div class="error-message" id="TtError">Por favor, insira um valor válido para o Tempo Total de Trabalho.</div>
+                <label>IBUTGd (°C)</label>
+                <input type="number" id="ibutgd" step="0.1" required>
             </div>
 
-            <div class="form-group">
-                <label for="ibutgd">IBUTGd (°C):</label>
-                <input type="number" id="ibutgd" name="ibutgd" placeholder="Ex: 25.5 °C" step="0.1" min="0" required>
-                <div class="error-message" id="ibutgdError">Por favor, insira um valor válido para IBUTGd.</div>
-            </div>
-            <div class="form-group">
-                <label for="Td">Tempo de Medição Ambiente de Descanso (minutos):</label>
-                <input type="number" id="Td" name="Td" placeholder="Ex: 30 minutos" min="0" required>
-                <div class="error-message" id="TdError">Por favor, insira um valor válido para o Tempo Total de Descanso.</div>
-            </div>
-
-            <button type="submit">Calcular</button>
+                <button type="submit">Calcular</button>
         </form>
 
         <div id="resultado" class="resultado">
             <!-- O resultado será exibido aqui -->
         </div>
+        <div class="info-ajuste">
+            Incremento de ajuste do IBUTG médio: <strong>+1,0 °C</strong> 
+        </div>
 
         <div class="imagem">
-            <h2>Quadro Nº 1 - Regime de Trabalho e Tipo de Atividade</h2>
-            <img src="Regime de Trabalho.jpg" alt="Quadro Nº 1 - Regime de Trabalho">
-
-            <h2>Quadro Nº 2 - Limite de Tolerância</h2>
-            <img src="Limite de Tolerância.png" alt="Quadro Nº 2 - Limite de Tolerância">
-
-            <h2>Quadro Nº 3 - Taxas Metabólicas por Tipo de Atividade</h2>
-            <img src="Taxa Metabólica.png" alt="Quadro Nº 3 - Taxas Metabólicas por Tipo de Atividade">
+            <h2>Quadro Nº 1 - Limite de Exposição</h2>
+            <img src="Imagens/Limite de Exposição.png" alt="Quadro Nº 2 - Limite de Tolerância">
         </div>
         <footer>
-            <p>&copy; 2024 WJBarros. Todos os direitos reservados.</p>
+            <p>&copy; 2026 WJBarros. Todos os direitos reservados.</p>
         </footer>
     </div>
 
     <script>
-        // Definição dos limites para cada tipo de atividade
-        const LIMITES = {
-            leve: [30.0, 30.69, 31.49, 32.2],
-            moderada: [26.7, 28.0, 29.49, 31.1],
-            pesada: [25.0, 25.99, 27.99, 30.0]
-        };
+       // Quadro 1 real NHO 06
+        const QUADRO1 = [
+            {m:100, ibutg:31.7},{m:101, ibutg:31.6},{m:103, ibutg:31.5},{m:105, ibutg:31.4},
+            {m:106, ibutg:31.3},{m:108, ibutg:31.2},{m:110, ibutg:31.1},{m:112, ibutg:31.0},
+            {m:114, ibutg:30.9},{m:115, ibutg:30.8},{m:117, ibutg:30.7},{m:119, ibutg:30.6},
+            {m:121, ibutg:30.5},{m:122, ibutg:30.4},{m:125, ibutg:30.3},{m:127, ibutg:30.2},
+            {m:129, ibutg:30.1},{m:132, ibutg:30.0},{m:134, ibutg:29.9},{m:136, ibutg:29.8},
+            {m:138, ibutg:29.7},{m:140, ibutg:29.6},{m:143, ibutg:29.5},{m:145, ibutg:29.4},
+            {m:148, ibutg:29.3},{m:150, ibutg:29.2}, {m:152, ibutg:29.1},{m:155, ibutg:29.0},
+            {m:158, ibutg:28.9},{m:160, ibutg:28.8},{m:163, ibutg:28.7},{m:165, ibutg:28.6},
+            {m:168, ibutg:28.5},{m:171, ibutg:28.4},{m:174, ibutg:28.3},{m:177, ibutg:28.2},
+            {m:180, ibutg:28.1},{m:183, ibutg:28.0},{m:186, ibutg:27.9},{m:189, ibutg:27.8},
+            {m:192, ibutg:27.7},{m:195, ibutg:27.6},{m:198, ibutg:27.5},{m:201, ibutg:27.4},
+            {m:205, ibutg:27.3},{m:208, ibutg:27.2},{m:212, ibutg:27.1},{m:215, ibutg:27.0},
+            {m:219, ibutg:26.9},{m:222, ibutg:26.8},{m:226, ibutg:26.7},{m:230, ibutg:26.6},
+            {m:233, ibutg:26.5},{m:237, ibutg:26.4},{m:241, ibutg:26.3},{m:245, ibutg:26.2},
+            {m:249, ibutg:26.1},{m:253, ibutg:26.0},{m:257, ibutg:25.9},{m:262, ibutg:25.8},{m:266, ibutg:25.7},
+            {m:270, ibutg:25.6},{m:275, ibutg:25.5},{m:279, ibutg:25.4},{m:284, ibutg:25.3},
+            {m:289, ibutg:25.2},{m:293, ibutg:25.1},{m:298, ibutg:25.0},{m:303, ibutg:24.9},
+            {m:308, ibutg:24.8},{m:313, ibutg:24.7},{m:318, ibutg:24.6},{m:324, ibutg:24.5},
+            {m:329, ibutg:24.4},{m:334, ibutg:24.3},{m:340, ibutg:24.2},{m:345, ibutg:24.1},
+            {m:351, ibutg:24.0},{m:357, ibutg:23.9},{m:363, ibutg:23.8},{m:369, ibutg:23.7},
+            {m:375, ibutg:23.6},{m:381, ibutg:23.5},{m:387, ibutg:23.4},{m:394, ibutg:23.3},
+            {m:400, ibutg:23.2},{m:407, ibutg:23.1},{m:414, ibutg:23.0},{m:420, ibutg:22.9},
+            {m:427, ibutg:22.8},{m:434, ibutg:22.7},{m:442, ibutg:22.6},{m:449, ibutg:22.5},
+            {m:456, ibutg:22.4},{m:464, ibutg:22.3},{m:479, ibutg:22.1},{m:487, ibutg:22.0},
+            {m:495, ibutg:21.9},{m:503, ibutg:21.8},{m:511, ibutg:21.7},{m:520, ibutg:21.6},
+            {m:528, ibutg:21.5},{m:537, ibutg:21.4},{m:546, ibutg:21.3},{m:555, ibutg:21.2},
+            {m:564, ibutg:21.1},{m:573, ibutg:21.0},{m:583, ibutg:20.9},{m:593, ibutg:20.8},
+            {m:602, ibutg:20.7},
+            
+        ];
 
-        // Função auxiliar para capitalizar a primeira letra
-        function capitalizeFirstLetter(string) {
-            return string.charAt(0).toUpperCase() + string.slice(1);
+        // Regimes exigidos
+        const REGIMES = [
+            {t:45,d:15},
+            {t:40,d:20},
+            {t:35,d:25},
+            {t:30,d:30},
+            {t:20,d:40},
+        ];
+
+        function obterLimite(M) {
+
+            // abaixo do mínimo
+            if (M <= QUADRO1[0].m) 
+                return Number(QUADRO1[0].ibutg.toFixed(1));
+
+            // acima do máximo
+            if (M >= QUADRO1[QUADRO1.length - 1].m)
+                return Number(QUADRO1[QUADRO1.length - 1].ibutg.toFixed(1));
+
+            for (let i = 0; i < QUADRO1.length - 1; i++) {
+
+                let M1 = QUADRO1[i].m;
+                let M2 = QUADRO1[i + 1].m;
+
+                if (M >= M1 && M <= M2) {
+
+                    let IB1 = QUADRO1[i].ibutg;
+                    let IB2 = QUADRO1[i + 1].ibutg;
+
+                    // Interpolação linear
+                    let limite =
+                        IB1 + ((M - M1) * (IB2 - IB1)) / (M2 - M1);
+
+                    // 🔥 arredonda para 1 casa decimal (padrão NHO)
+                    return Number(limite.toFixed(1));
+                }
+            }
         }
 
-        // Função para verificar o regime de trabalho com base no IBUTG calculado e no tipo de atividade
-        function verificarRegimeTrabalho(ibutg, limites, tipoAtividade) {
-            let mensagem = '';
 
-            if (ibutg <= limites[0]) {
-                mensagem = `Ótimo! O ambiente está ideal para trabalho contínuo.`;
-            } else if (ibutg > limites[0] && ibutg <= limites[1]) {
-                mensagem = `Regime de trabalho sugerido: 45 minutos de trabalho e 15 minutos de descanso.`;
-            } else if (ibutg > limites[1] && ibutg <= limites[2]) { 
-                mensagem = `Regime de trabalho sugerido: 30 minutos de trabalho e 30 minutos de descanso.`;
-            } else if (ibutg > limites[2] && ibutg <= limites[3]) { 
-                mensagem = `Regime de trabalho sugerido: 15 minutos de trabalho e 45 minutos de descanso.`;
-            } else {
-                mensagem = `Atenção! Não é permitido o trabalho sem a adoção de medidas adequadas de controle.`;
-            }
+        document.getElementById("calorForm").addEventListener("submit",function(e){
+        e.preventDefault();
 
-            return `Tipo de Atividade: ${capitalizeFirstLetter(tipoAtividade)}.<br>${mensagem}<br><strong>IBUTG Calculado:</strong> ${ibutg.toFixed(1)} °C`;
+        const Mt = parseFloat(document.getElementById("Mt").value);
+        const ibutgt = parseFloat(document.getElementById("ibutgt").value);
+        const ibutgd = parseFloat(document.getElementById("ibutgd").value);
+
+        if(!Mt || !ibutgt || !ibutgd){
+            document.getElementById("resultado").innerHTML="Preencha todos os campos.";
+            return;
         }
 
-        document.getElementById('calorForm').addEventListener('submit', function (event) {
-            event.preventDefault();
+        const Md = 115;
+        let texto="";
 
-            // Limpar mensagens de erro anteriores
-            limparErros();
+        REGIMES.forEach(r=>{
+            const Tt=r.t*60;
+            const Td=r.d*60;
 
-            // Obtendo valores do formulário
-            const atividade = document.getElementById('atividade').value.trim();
-            const Mt = parseFloat(document.getElementById("Mt").value);
-            const ibutgt = parseFloat(document.getElementById('ibutgt').value);
-            const ibutgd = parseFloat(document.getElementById('ibutgd').value);
-            const TtInput = document.getElementById("Tt").value.trim();
-            const TdInput = document.getElementById("Td").value.trim();
+            const ibutgpond=((ibutgt*Tt)+(ibutgd*Td))/(Tt+Td);
+            const Mpond=((Mt*Tt)+(Md*Td))/(Tt+Td);
 
-            let isValid = true;
+            const limite=obterLimite(Mpond);
+            const ibutgAjustado = ibutgpond + 1;
 
-            // Validação do Tipo de Atividade
-            if (atividade === "") {
-                exibirErro('atividade', 'Por favor, selecione o tipo de atividade.');
-                isValid = false;
+            if(ibutgpond<=limite){
+                texto+=`
+                <b>✅ Regime permitido: ${r.t} min trabalho / ${r.d} min descanso</b><br>
+                IBUTG ponderado: ${ibutgpond.toFixed(1)} °C<br>
+                Ajuste vestimenta (fixo NHO06): +1,0 °C<br>
+                IBUTG ajustado: <b>${ibutgAjustado.toFixed(1)} °C</b><br>
+                M ponderado: ${Mpond.toFixed(1)} W<br>
+                Limite NHO06: ${limite.toFixed(1)} °C<br><br>
+                `;
             }
-
-            // Validação da Taxa de Metabolismo do Trabalho (Mt)
-            if (isNaN(Mt) || Mt <= 0) {
-                exibirErro('Mt', 'Por favor, insira um valor válido para a Taxa de Metabolismo do Trabalho.');
-                isValid = false;
-            }
-
-            // Validação do IBUTGt
-            if (isNaN(ibutgt) || ibutgt < 0) {
-                exibirErro('ibutgt', 'Por favor, insira um valor válido para IBUTGt.');
-                isValid = false;
-            }
-
-            // Validação do Tempo Total Trabalho (Tt)
-            if (isNaN(TtInput) || TtInput === "" || TtInput < 0) {
-                exibirErro('Tt', 'Por favor, insira um valor válido para o Tempo Total de Trabalho.');
-                isValid = false;
-            }
-
-            // Validação do IBUTGd
-            if (isNaN(ibutgd) || ibutgd < 0) {
-                exibirErro('ibutgd', 'Por favor, insira um valor válido para IBUTGd.');
-                isValid = false;
-            }
-
-            // Validação do Tempo Total Descanso (Td)
-            if (isNaN(TdInput) || TdInput === "" || TdInput < 0) {
-                exibirErro('Td', 'Por favor, insira um valor válido para o Tempo Total de Descanso.');
-                isValid = false;
-            }
-
-            if (!isValid) {
-                return; // Parar a execução se houver erros
-            }
-
-            // Converter tempos de minutos para segundos
-            const Tt = parseFloat(TtInput) * 60; // Minutos para segundos
-            const Td = parseFloat(TdInput) * 60; // Minutos para segundos
-
-            // Prevenção de Divisão por Zero
-            if ((Tt + Td) === 0) {
-                exibirErro('Tt', 'A soma do Tempo Total de Trabalho e Descanso deve ser maior que zero.');
-                isValid = false;
-                return;
-            }
-
-            // Cálculo do IBUTG
-            const ibutg = ((ibutgt * Tt) + (ibutgd * Td)) / (Tt + Td);
-
-            // Verificar regime de trabalho com base no tipo de atividade
-            const limitesAtividade = LIMITES[atividade];
-            let resultadoTexto = '';
-
-            if (limitesAtividade) {
-                resultadoTexto = verificarRegimeTrabalho(ibutg, limitesAtividade, atividade);
-            } else {
-                resultadoTexto = `Tipo de atividade desconhecido.`;
-            }
-
-            exibirResultado(resultadoTexto);
         });
 
-        // Função para exibir mensagem de erro
-        function exibirErro(campo, mensagem) {
-            const erroElement = document.getElementById(`${campo}Error`);
-            erroElement.textContent = mensagem;
-            erroElement.style.display = 'block';
-            document.getElementById(campo).classList.add('error');
+        if(texto===""){
+            texto="❌ Não é permitido o trabalho, sema adoção de medidas adequadas de controle.";
         }
 
-        // Função para limpar mensagens de erro
-        function limparErros() {
-            const errorMessages = document.querySelectorAll('.error-message');
-            errorMessages.forEach(function(msg) {
-                msg.style.display = 'none';
-            });
+        document.getElementById("resultado").innerHTML=texto;
 
-            const errorFields = document.querySelectorAll('.error');
-            errorFields.forEach(function(field) {
-                field.classList.remove('error');
-            });
-        }
-
-        // Função para exibir o resultado com estilo
-        function exibirResultado(mensagem) {
-            const resultadoElement = document.getElementById('resultado');
-            resultadoElement.innerHTML = mensagem;
-        }
+        });
 
     </script>
     
 </body>
 </html>
+
+
+
+
+
+
+
 
 
 
