@@ -402,8 +402,8 @@
             if (ibutgAjustado <= limite) {
                 texto += `
                 <b>✅ Regime permitido: ${r.t} minutos de trabalho / ${r.d} minutos de descanso</b><br>
-                IBUTG: ${ibutgpond.toFixed(1)} °C<br>
-                IBUTG + Incremento: <b>${ibutgAjustado.toFixed(1)} °C</b><br>
+                IBUTGMAX [°C]: ${ibutgpond.toFixed(1)} °C<br>
+                IBUTGMAX [°C] + Incremento: <b>${ibutgAjustado.toFixed(1)} °C</b><br>
                 M [W]: ${Mpond.toFixed(1)} W<br>
                 Limite de Tolerância: ${limite.toFixed(1)} °C<br><br>
                 `;
@@ -422,6 +422,7 @@
     
 </body>
 </html>
+
 
 
 
