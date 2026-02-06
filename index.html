@@ -399,8 +399,8 @@
             const limite=obterLimite(Mpond);
             const ibutgAjustado = ibutgpond + incremento;
 
-            if(ibutgpond<=limite){
-                texto+=`
+            if (ibutgAjustado <= limite) {
+                texto += `
                 <b>✅ Regime permitido: ${r.t} minutos de trabalho / ${r.d} minutos de descanso</b><br>
                 IBUTG: ${ibutgpond.toFixed(1)} °C<br>
                 IBUTG + Incremento: <b>${ibutgAjustado.toFixed(1)} °C</b><br>
@@ -422,6 +422,7 @@
     
 </body>
 </html>
+
 
 
 
