@@ -372,7 +372,7 @@
                     let limite =
                         IB1 + ((M - M1) * (IB2 - IB1)) / (M2 - M1);
 
-                    // 🔥 arredonda para 1 casa decimal (padrão NHO)
+                    // 🔥 arredonda para 1 casa decimal 
                     return Number(limite.toFixed(1));
                 }
             }
@@ -406,18 +406,17 @@
 
             if(ibutgpond<=limite){
                 texto+=`
-                <b>✅ Regime permitido: ${r.t} min trabalho / ${r.d} min descanso</b><br>
-                IBUTG ponderado: ${ibutgpond.toFixed(1)} °C<br>
-                Ajuste vestimenta (fixo NHO06): +1,0 °C<br>
-                IBUTG ajustado: <b>${ibutgAjustado.toFixed(1)} °C</b><br>
-                M ponderado: ${Mpond.toFixed(1)} W<br>
-                Limite NHO06: ${limite.toFixed(1)} °C<br><br>
+                <b>✅ Regime permitido: ${r.t} minutos de trabalho / ${r.d} minutos de descanso</b><br>
+                IBUTG: ${ibutgpond.toFixed(1)} °C<br>
+                IBUTG + Incremento: <b>${ibutgAjustado.toFixed(1)} °C</b><br>
+                M [W]: ${Mpond.toFixed(1)} W<br>
+                Limite de Tolerância: ${limite.toFixed(1)} °C<br><br>
                 `;
             }
         });
 
         if(texto===""){
-            texto="❌ Não é permitido o trabalho, sema adoção de medidas adequadas de controle.";
+            texto="❌ Não é permitido o trabalho, sem a adoção de medidas adequadas de controle.";
         }
 
         document.getElementById("resultado").innerHTML=texto;
@@ -428,6 +427,7 @@
     
 </body>
 </html>
+
 
 
 
