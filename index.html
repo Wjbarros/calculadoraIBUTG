@@ -36,15 +36,7 @@
             margin: auto;
         }
 
-        .info-ajuste {
-            text-align: center;
-            
-            color: white;
-            margin-top: 20px;
-            font-size: 16px;
-        }
-
-       .imagem img {
+        .imagem img {
             max-width: 700px;  
             width: 100%;      
             height: auto;
@@ -288,7 +280,7 @@
             
             <div class="form-group">
                 <label>Incremento de Vestimentas (°C)</label>
-                <input type="number" id="ibutgd" step="0.1" required>
+                <input type="number" id="incremento" step="0.1" required>
             </div>
 
                 <button type="submit">Calcular</button>
@@ -297,10 +289,7 @@
         <div id="resultado" class="resultado">
             <!-- O resultado será exibido aqui -->
         </div>
-        <div class="info-ajuste">
-            Incremento de ajuste do IBUTG médio: <strong>+1,0 °C</strong> 
-        </div>
-
+        
         <div class="imagem">
             <h2>Quadro Nº 1 - Limite de Exposição</h2>
             <img src="Limite de Exposição.png" alt="Quadro Nº 2 - Limite de Tolerância">
@@ -327,7 +316,7 @@
             {m:205, ibutg:27.3},{m:208, ibutg:27.2},{m:212, ibutg:27.1},{m:215, ibutg:27.0},
             {m:219, ibutg:26.9},{m:222, ibutg:26.8},{m:226, ibutg:26.7},{m:230, ibutg:26.6},
             {m:233, ibutg:26.5},{m:237, ibutg:26.4},{m:241, ibutg:26.3},{m:245, ibutg:26.2},
-            {m:249, ibutg:26.1},{m:253, ibutg:26.0},{m:257, ibutg:25.9},{m:262, ibutg:25.8},{m:266, ibutg:25.7},
+            {m:249, ibutg:26.1},{m:253, ibutg:26.0},{m:257, ibutg:25.9},{m:262, ibutg:25.8},
             {m:270, ibutg:25.6},{m:275, ibutg:25.5},{m:279, ibutg:25.4},{m:284, ibutg:25.3},
             {m:289, ibutg:25.2},{m:293, ibutg:25.1},{m:298, ibutg:25.0},{m:303, ibutg:24.9},
             {m:308, ibutg:24.8},{m:313, ibutg:24.7},{m:318, ibutg:24.6},{m:324, ibutg:24.5},
@@ -340,7 +329,7 @@
             {m:495, ibutg:21.9},{m:503, ibutg:21.8},{m:511, ibutg:21.7},{m:520, ibutg:21.6},
             {m:528, ibutg:21.5},{m:537, ibutg:21.4},{m:546, ibutg:21.3},{m:555, ibutg:21.2},
             {m:564, ibutg:21.1},{m:573, ibutg:21.0},{m:583, ibutg:20.9},{m:593, ibutg:20.8},
-            {m:602, ibutg:20.7},
+            {m:602, ibutg:20.7},{m:266, ibutg:25.7}
             
         ];
 
@@ -407,13 +396,13 @@
             const Mpond=((Mt*Tt)+(Md*Td))/(Tt+Td);
 
             const limite=obterLimite(Mpond);
-            const ibutgAjustado = ibutgpond + 1;
+            const ibutgAjustado = ibutgpond + incremento;
 
             if(ibutgpond<=limite){
                 texto+=`
                 <b>✅ Regime permitido: ${r.t} minutos de trabalho / ${r.d} minutos de descanso</b><br>
                 IBUTG: ${ibutgpond.toFixed(1)} °C<br>
-                IBUTG + Incremento: <b>${ibutgAjustado.toFixed(1)} °C</b><br>
+                IBUTG + Incremento: <b>${ibutgAjustado} °C</b><br>
                 M [W]: ${Mpond.toFixed(1)} W<br>
                 Limite de Tolerância: ${limite.toFixed(1)} °C<br><br>
                 `;
@@ -432,6 +421,7 @@
     
 </body>
 </html>
+
 
 
 
