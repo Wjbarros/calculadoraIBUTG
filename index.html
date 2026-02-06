@@ -265,6 +265,12 @@
                         <option value="630">Trabalho pesado com o corpo: 630 W</option>
                     </optgroup>
                 </select>
+                <label for="Iv">Incremento de Vestimentas (°C):</label>
+                <select id="Iv" name="Iv" required>
+                        <option value="1">Macacão de poliolefina: 1</option>
+                        <option value="3">Vestimenta ou macacão forrado (tecido duplo): 3</option>
+                        <option value="12">Macacão impermeável ao vapor sobreposto à roupa de trabalho: 12</option>
+                </select>    
                 <div class="error-message" id="MtError">Por favor, insira um valor válido para a Taxa de Metabolismo do Trabalho.</div>
             </div>
             
@@ -379,9 +385,9 @@
         const Mt = parseFloat(document.getElementById("Mt").value);
         const ibutgt = parseFloat(document.getElementById("ibutgt").value);
         const ibutgd = parseFloat(document.getElementById("ibutgd").value);
-        const incremento = parseFloat(document.getElementById("incremento").value);
+        const incremento = parseFloat(document.getElementById("Iv").value);
 
-        if(!Mt || !ibutgt || !ibutgd || !incremento){
+        if(!Mt || !ibutgt || !ibutgd || !Iv){
             document.getElementById("resultado").innerHTML="Preencha todos os campos.";
             return;
         }
@@ -397,7 +403,7 @@
             const Mpond=((Mt*Tt)+(Md*Td))/(Tt+Td);
 
             const limite=obterLimite(Mpond);
-            const ibutgAjustado = ibutgpond + incremento;
+            const ibutgAjustado = ibutgpond + Iv;
 
             if (ibutgAjustado <= limite) {
                 texto += `
@@ -422,6 +428,7 @@
     
 </body>
 </html>
+
 
 
 
