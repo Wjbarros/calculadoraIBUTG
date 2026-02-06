@@ -326,7 +326,7 @@
             {m:369, ibutg:23.7},{m:375, ibutg:23.6},{m:381, ibutg:23.5},{m:387, ibutg:23.4},
             {m:394, ibutg:23.3},{m:400, ibutg:23.2},{m:407, ibutg:23.1},{m:414, ibutg:23.0},
             {m:420, ibutg:22.9},{m:427, ibutg:22.8},{m:434, ibutg:22.7},{m:442, ibutg:22.6},
-            {m:449, ibutg:22.5},{m:456, ibutg:22.4},{m:464, ibutg:22.3},{m:479, ibutg:22.1},,
+            {m:449, ibutg:22.5},{m:456, ibutg:22.4},{m:464, ibutg:22.3},{m:479, ibutg:22.1},
             {m:487, ibutg:22.0},{m:495, ibutg:21.9},{m:503, ibutg:21.8},{m:511, ibutg:21.7},
             {m:520, ibutg:21.6},{m:528, ibutg:21.5},{m:537, ibutg:21.4},{m:546, ibutg:21.3},
             {m:555, ibutg:21.2},{m:564, ibutg:21.1},{m:573, ibutg:21.0},{m:583, ibutg:20.9},
@@ -354,12 +354,10 @@
                 return Number(QUADRO1[QUADRO1.length - 1].ibutg.toFixed(1));
 
             for (let i = 0; i < QUADRO1.length - 1; i++) {
-
                 let M1 = QUADRO1[i].m;
                 let M2 = QUADRO1[i + 1].m;
 
                 if (M >= M1 && M <= M2) {
-
                     let IB1 = QUADRO1[i].ibutg;
                     let IB2 = QUADRO1[i + 1].ibutg;
 
@@ -381,13 +379,13 @@
         const ibutgt = parseFloat(document.getElementById("ibutgt").value);
         const ibutgd = parseFloat(document.getElementById("ibutgd").value);
         const Iv = parseFloat(document.getElementById("Iv").value);
+        const Md = parseFloat(document.getElementById("Md").value) || 115;
 
-        if(!Mt || !ibutgt || !ibutgd || !Iv){
-            document.getElementById("resultado").innerHTML="Preencha todos os campos.";
+        if(isNaN(Mt) || isNaN(ibutgt) || isNaN(ibutgd) || isNaN(Iv)){ 
+            document.getElementById("resultado").innerHTML="Preencha todos os campos."; 
             return;
         }
 
-        const Md = 115;
         let texto="";
 
         REGIMES.forEach(r=>{
@@ -423,6 +421,7 @@
     
 </body>
 </html>
+
 
 
 
