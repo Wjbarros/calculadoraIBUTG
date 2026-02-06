@@ -381,7 +381,7 @@
         const ibutgd = parseFloat(document.getElementById("ibutgd").value);
         const incremento = parseFloat(document.getElementById("incremento").value);
 
-        if(!Mt || !ibutgt || !ibutgd || !incremnto){
+        if(!Mt || !ibutgt || !ibutgd || !incremento){
             document.getElementById("resultado").innerHTML="Preencha todos os campos.";
             return;
         }
@@ -390,7 +390,6 @@
         let texto="";
 
         REGIMES.forEach(r=>{
-            const incremento = incremento
             const Tt=r.t*60;
             const Td=r.d*60;
 
@@ -423,6 +422,7 @@
     
 </body>
 </html>
+
 
 
 
