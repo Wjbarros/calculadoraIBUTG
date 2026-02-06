@@ -264,13 +264,7 @@
                         <option value="315">Trabalho pesado com os dois braços: 315 W</option>
                         <option value="630">Trabalho pesado com o corpo: 630 W</option>
                     </optgroup>
-                </select>
-                <label for="Iv">Incremento de Vestimentas (°C):</label>
-                <select id="Iv" name="Iv" required>
-                        <option value="1">Macacão de poliolefina: 1</option>
-                        <option value="3">Vestimenta ou macacão forrado (tecido duplo): 3</option>
-                        <option value="12">Macacão impermeável ao vapor sobreposto à roupa de trabalho: 12</option>
-                </select>    
+                </select> 
                 <div class="error-message" id="MtError">Por favor, insira um valor válido para a Taxa de Metabolismo do Trabalho.</div>
             </div>
             
@@ -283,12 +277,13 @@
                 <label>IBUTGd (°C)</label>
                 <input type="number" id="ibutgd" step="0.1" required>
             </div>
-            
-            <div class="form-group">
-                <label>Incremento de Vestimentas (°C)</label>
-                <input type="number" id="incremento" step="0.1" required>
-            </div>
-
+            <label for="Iv">Incremento de Vestimentas (°C):</label>
+                <select id="Iv" name="Iv" required>
+                        <option value="">Selecione</option>
+                        <option value="1">Macacão de poliolefina: 1</option>
+                        <option value="3">Vestimenta ou macacão forrado (tecido duplo): 3</option>
+                        <option value="12">Macacão impermeável ao vapor sobreposto à roupa de trabalho: 12</option>
+                </select> 
                 <button type="submit">Calcular</button>
         </form>
 
@@ -428,6 +423,7 @@
     
 </body>
 </html>
+
 
 
 
