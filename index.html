@@ -9,24 +9,40 @@
         * {                                        
             box-sizing: border-box;
         }
-
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f6f8;
             margin: 0;
             padding: 25px;
+            font-size: 20px;
         }
-
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background: #0000CD;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            color: white;
+        .container{
+            max-width:1050px;
+            margin:auto;
+            background-image: url("Imagem de Fundo.jpeg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding:25px;
+            border-radius:8px;
+            box-shadow:0 0 10px rgba(0,0,0,0.3);           
+            color:white;
+            position: relative;
         }
-
+        /* Camada escura para dar contraste no texto */
+        .container::before{
+            content:"";
+            position:absolute;
+            inset:0;
+            background: rgba(0,0,0,0.55);
+            border-radius:8px;
+            z-index:0;
+        }
+        /* Faz o conteúdo ficar acima da camada escura */
+        .container > *{
+            position:relative;
+            z-index:1;
+        }
         .imagem {
             display: flex;
             flex-direction: column;
@@ -35,7 +51,6 @@
             max-width: 100%;
             margin: auto;
         }
-
         .imagem img {
             max-width: 700px;  
             width: 100%;      
@@ -43,30 +58,25 @@
             display: block;
             margin: 0 auto;
         }
-
         h1 {
             text-align: center;
             color: white;
-            font-size: 35px;
+            font-size: 40px;
         }
-
         h2 {
             text-align: center;
             color: white;
             font-size: 20px;
         }
-
         .form-group {
             margin-bottom: 15px;
             position: relative;
         }
-
         label {
             display: block;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             color: white;
         }
-
         input[type="number"],
         select {
             width: 100%;
@@ -75,35 +85,30 @@
             border-radius: 4px;
             font-size: 15px;
         }
-
         input[type="number"].error,
         select.error {
             border-color: red;
             background-color: #ffe6e6;
         }
-
         .error-message {
             color: yellow;
             font-size: 14px;
             margin-top: 5px;
             display: none;
         }
-
         button {
             width: 100%;
-            padding: 10px;
+            padding: 9px;
             background-color: #007bff;
             border: none;
             color: white;
             font-size: 20px;
             border-radius: 4px;
-            cursor: pointer;
+            cursor: pointer;            
         }
-
         button:hover {
             background-color: #0056b3;
         }
-
         .resultado {
             margin-top: 20px;
             padding: 15px;
@@ -113,20 +118,15 @@
             font-size: 25px; 
             background-color: white;
         }
-
         footer {
             text-align: center;
             color: white;
             margin-top: 30px;
         }
-
-        
-        .form-group select#Mt {
+       .form-group select#Mt {
             height: auto; 
-            max-height: 200px; 
-           
+            max-height: 200px;            
         }
-
         select {
             width: 100%;
             padding: 10px; 
@@ -135,101 +135,80 @@
             border-radius: 4px; 
             background-color: #fff; 
         }
-
         /* Para Tablets (largura até 768px) */
         @media (max-width: 768px) {
             body {
                 padding: 15px;
-            }
-           
+            }          
             select {
                 font-size: 14px; 
                 padding: 8px; 
             }
-
             option {
                 padding: 10px; 
             }
-
             .container {
                 padding: 25px;
-            }
-            
+            }            
             input[type="number"],
             select {
                 padding: 8px 2px;                              
                 font-size: 14px; 
-            }
-        
+            }        
             h1 {
                 font-size: 28px;
             }
-
             h2 {
                 font-size: 18px;
             }
-
             .resultado {
                 font-size: 22px;
             }
-
             .imagem img {
                 width: 100%;
                 height: auto;
             }
         }
-
         /* Para telas pequenas (480px ou menos) */
         @media (max-width: 480px) {
             body {
                 padding: 10px;
             }
-
             select {
                 font-size: 12px; 
                 padding: 6px; 
             }
-
             option {
                 padding: 8px; 
             }
-
             .container {
                 padding: 20px;
             }
-
             h1 {
                 font-size: 24px;
             }
-
             h2 {
                 font-size: 16px;
             }
-
             label {
                 font-size: 14px;
             }
-
             input[type="number"],
             select {
                 padding: 6px 10px;
                 font-size: 14px;
             }
-
             button {
                 font-size: 18px;
                 padding: 8px;
             }
-
             .resultado {
                 font-size: 20px;
             }
-
             footer {
                 margin-top: 20px;
                 font-size: 14px;
             }
-
             .imagem img {
                 width: 100%;
                 height: auto;
@@ -239,69 +218,65 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Calculadora de Estresse Térmico</h1>
-        <form id="calorForm" novalidate>
-            <div class="form-group">
-                <label for="Mt">Taxa de Metabolismo do Trabalho (W):</label>
-                <select id="Mt" name="Mt" required>
-                    <option value="">Selecione</option>
-                    <optgroup label="Trabalho Leve">
-                        <option value="153">Trabalho leve com as mãos: 153 W</option>
-                        <option value="189">Trabalho leve com um braço: 189 W</option>
-                        <option value="243">Trabalho leve com os dois braços: 243 W</option>
-                        <option value="351">Trabalho leve com o corpo: 351 W</option>
-                    </optgroup>
-                    <optgroup label="Trabalho Moderado">
-                        <option value="180">Trabalho moderado com as mãos: 180 W</option>
-                        <option value="225">Trabalho moderado com um braço: 225 W</option>
-                        <option value="279">Trabalho moderado com os dois braços: 279 W</option>
-                        <option value="468">Trabalho moderado com o corpo: 468 W</option>
-                    </optgroup>
-                    <optgroup label="Trabalho Pesado">
-                        <option value="198">Trabalho pesado com as mãos: 198 W</option>
-                        <option value="261">Trabalho pesado com um braço: 261 W</option>
-                        <option value="315">Trabalho pesado com os dois braços: 315 W</option>
-                        <option value="630">Trabalho pesado com o corpo: 630 W</option>
-                    </optgroup>
-                </select> 
-                <div class="error-message" id="MtError">Por favor, insira um valor válido para a Taxa de Metabolismo do Trabalho.</div>
-            </div>
-            
-            <div class="form-group">
-                <label>IBUTGt (°C)</label>
-                <input type="number" id="ibutgt" step="0.1" required>
-            </div>
-
-            <div class="form-group">
-                <label>IBUTGd (°C)</label>
-                <input type="number" id="ibutgd" step="0.1" required>
-            </div>
+   <div class="container">
+    <h1>Calculadora de Estresse Térmico</h1>
+    <form id="calorForm" novalidate>
+        <div class="form-group">
+            <label for="Mt">Taxa de Metabolismo do Trabalho (W):</label>
+            <select id="Mt" name="Mt" required>
+                <option value="">Selecione</option>
+                <optgroup label="Trabalho Leve">
+                    <option value="153">Trabalho leve com as mãos: 153 W</option>
+                    <option value="189">Trabalho leve com um braço: 189 W</option>
+                    <option value="243">Trabalho leve com os dois braços: 243 W</option>
+                    <option value="351">Trabalho leve com o corpo: 351 W</option>
+                </optgroup>
+                <optgroup label="Trabalho Moderado">
+                    <option value="180">Trabalho moderado com as mãos: 180 W</option>
+                    <option value="225">Trabalho moderado com um braço: 225 W</option>
+                    <option value="279">Trabalho moderado com os dois braços: 279 W</option>
+                    <option value="468">Trabalho moderado com o corpo: 468 W</option>
+                </optgroup>
+                <optgroup label="Trabalho Pesado">
+                    <option value="198">Trabalho pesado com as mãos: 198 W</option>
+                    <option value="261">Trabalho pesado com um braço: 261 W</option>
+                    <option value="315">Trabalho pesado com os dois braços: 315 W</option>
+                    <option value="630">Trabalho pesado com o corpo: 630 W</option>
+                </optgroup>
+            </select>
+        </div>
+        <div class="form-group">
             <label for="Iv">Incremento de Vestimentas (°C):</label>
-                <select id="Iv" name="Iv" required>
-                        <option value="">Selecione</option>
-                        <option value="1">Macacão de poliolefina: 1</option>
-                        <option value="3">Vestimenta ou macacão forrado (tecido duplo): 3</option>
-                        <option value="12">Macacão impermeável ao vapor sobreposto à roupa de trabalho: 12</option>
-                </select> 
-                <button type="submit">Calcular</button>
-        </form>
-
-        <div id="resultado" class="resultado">
-            <!-- O resultado será exibido aqui -->
+            <select id="Iv" name="Iv" required>
+                <option value="">Selecione</option>
+                <option value="1">Macacão de poliolefina: 1</option>
+                <option value="3">Vestimenta ou macacão forrado (tecido duplo): 3</option>
+                <option value="12">Macacão impermeável ao vapor sobreposto à roupa de trabalho: 12</option>
+            </select>
         </div>
-        
-        <div class="imagem">
-            <h2>Quadro Nº 1 - Limite de Exposição</h2>
-            <img src="Limite de Exposição.png" alt="Quadro Nº 2 - Limite de Tolerância">
+        <div class="form-group">
+            <label>IBUTGt (°C)</label>
+            <input type="number" id="ibutgt" step="0.1" required>
         </div>
-        <footer>
-            <p>&copy; 2026 WJBarros. Todos os direitos reservados.</p>
-        </footer>
+        <div class="form-group">
+            <label>IBUTGd (°C)</label>
+            <input type="number" id="ibutgd" step="0.1" required>
+        </div>
+        <div class="form-group">
+            <button type="submit">Calcular</button>
+        </div>
+    </form>
+    <div id="resultado" class="resultado"></div>
+    <div class="imagem">
+        <h2>Quadro Nº 1 - Limite de Exposição</h2>
+        <img src="Limite de Exposição.png">
+    </div>
+    <footer>
+        <p>&copy; 2026 WJBarros. Todos os direitos reservados.</p>
+    </footer>
     </div>
 
     <script>
-       // Quadro 1 real NHO 06
         const QUADRO1 = [
             {m:100, ibutg:31.7},{m:101, ibutg:31.6},{m:103, ibutg:31.5},{m:105, ibutg:31.4},
             {m:106, ibutg:31.3},{m:108, ibutg:31.2},{m:110, ibutg:31.1},{m:112, ibutg:31.0},
@@ -309,7 +284,7 @@
             {m:121, ibutg:30.5},{m:122, ibutg:30.4},{m:125, ibutg:30.3},{m:127, ibutg:30.2},
             {m:129, ibutg:30.1},{m:132, ibutg:30.0},{m:134, ibutg:29.9},{m:136, ibutg:29.8},
             {m:138, ibutg:29.7},{m:140, ibutg:29.6},{m:143, ibutg:29.5},{m:145, ibutg:29.4},
-            {m:148, ibutg:29.3},{m:150, ibutg:29.2}, {m:152, ibutg:29.1},{m:155, ibutg:29.0},
+            {m:148, ibutg:29.3},{m:150, ibutg:29.2},{m:152, ibutg:29.1},{m:155, ibutg:29.0},
             {m:158, ibutg:28.9},{m:160, ibutg:28.8},{m:163, ibutg:28.7},{m:165, ibutg:28.6},
             {m:168, ibutg:28.5},{m:171, ibutg:28.4},{m:174, ibutg:28.3},{m:177, ibutg:28.2},
             {m:180, ibutg:28.1},{m:183, ibutg:28.0},{m:186, ibutg:27.9},{m:189, ibutg:27.8},
@@ -330,97 +305,72 @@
             {m:487, ibutg:22.0},{m:495, ibutg:21.9},{m:503, ibutg:21.8},{m:511, ibutg:21.7},
             {m:520, ibutg:21.6},{m:528, ibutg:21.5},{m:537, ibutg:21.4},{m:546, ibutg:21.3},
             {m:555, ibutg:21.2},{m:564, ibutg:21.1},{m:573, ibutg:21.0},{m:583, ibutg:20.9},
-            {m:593, ibutg:20.8},{m:602, ibutg:20.7},
-            
+            {m:593, ibutg:20.8},{m:602, ibutg:20.7}
         ];
 
-        // Regimes exigidos
         const REGIMES = [
-            {t:45,d:15},
-            {t:40,d:20},
-            {t:35,d:25},
-            {t:30,d:30},
-            {t:20,d:40},
+            {Tt:60, Td:0},
+            {Tt:30, Td:30},
+            {Tt:25, Td:35},
+            {Tt:20, Td:40},
+            {Tt:15, Td:45},
         ];
 
-        function obterLimite(M) {
-
-            // abaixo do mínimo
-            if (M <= QUADRO1[0].m) 
-                return Number(QUADRO1[0].ibutg.toFixed(1));
-
-            // acima do máximo
-            if (M >= QUADRO1[QUADRO1.length - 1].m)
-                return Number(QUADRO1[QUADRO1.length - 1].ibutg.toFixed(1));
-
-            for (let i = 0; i < QUADRO1.length - 1; i++) {
-                let M1 = QUADRO1[i].m;
-                let M2 = QUADRO1[i + 1].m;
-
-                if (M >= M1 && M <= M2) {
-                    let IB1 = QUADRO1[i].ibutg;
-                    let IB2 = QUADRO1[i + 1].ibutg;
-
-                    // Interpolação linear
-                    let limite =
-                        IB1 + ((M - M1) * (IB2 - IB1)) / (M2 - M1);
-
-                    // 🔥 arredonda para 1 casa decimal 
+        function obterLimite(M){
+            for(let i=0;i<QUADRO1.length-1;i++){
+                const a = QUADRO1[i];
+                const b = QUADRO1[i+1];
+                if(M>=a.m && M<=b.m){
+                    const limite = a.ibutg + ((M-a.m)*(b.ibutg-a.ibutg))/(b.m-a.m);
                     return Number(limite.toFixed(1));
                 }
             }
+            return QUADRO1[QUADRO1.length-1].ibutg;
         }
 
+        document.getElementById("calorForm").addEventListener("submit", function(e){
+            e.preventDefault();
 
-        document.getElementById("calorForm").addEventListener("submit",function(e){
-        e.preventDefault();
+            const Mt = parseFloat(document.getElementById("Mt").value);
+            const ibutgt = parseFloat(document.getElementById("ibutgt").value);
+            const ibutgd = parseFloat(document.getElementById("ibutgd").value);
+            const Iv = parseFloat(document.getElementById("Iv").value);
 
-        const Mt = parseFloat(document.getElementById("Mt").value);
-        const ibutgt = parseFloat(document.getElementById("ibutgt").value);
-        const ibutgd = parseFloat(document.getElementById("ibutgd").value);
-        const Iv = parseFloat(document.getElementById("Iv").value);
-        const Md = parseFloat(document.getElementById("Md").value) || 115;
+            const limite = obterLimite(Mt);
+            let resultadoTexto = "";
 
-        if(isNaN(Mt) || isNaN(ibutgt) || isNaN(ibutgd) || isNaN(Iv)){ 
-            document.getElementById("resultado").innerHTML="Preencha todos os campos."; 
-            return;
-        }
+            for(const r of REGIMES){
 
-        let texto="";
+                const ibutgpond = ((ibutgt*r.Tt)+(ibutgd*r.Td))/60;
+                const ibutgAjustado = ibutgpond + Iv;
 
-        REGIMES.forEach(r=>{
-            const Tt=r.t*60;
-            const Td=r.d*60;
+                if(ibutgAjustado <= limite){
 
-            const ibutgpond=((ibutgt*Tt)+(ibutgd*Td))/(Tt+Td);
-            const Mpond=((Mt*Tt)+(Md*Td))/(Tt+Td);
+                    if(r.Tt === 60){
+                        resultadoTexto += `✅ <b>Autorizado o trabalho contínuo</b><br>`;
+                    }else{
+                        resultadoTexto += `✅ <b>Regime indicado: ${r.Tt} minutos de trabalho / ${r.Td} minutos de descanso</b><br>`;
+                    }
 
-            const limite=obterLimite(Mpond);
-            const ibutgAjustado = ibutgpond + Iv;
-
-            if (ibutgAjustado <= limite) {
-                texto += `
-                <b>✅ Regime permitido: ${r.t} minutos de trabalho / ${r.d} minutos de descanso</b><br>
-                IBUTGMAX [°C]: ${ibutgpond.toFixed(1)} °C<br>
-                IBUTGMAX [°C] + Incremento: <b>${ibutgAjustado.toFixed(1)} °C</b><br>
-                M [W]: ${Mpond.toFixed(1)} W<br>
-                Limite de Tolerância: ${limite.toFixed(1)} °C<br><br>
-                `;
+                    resultadoTexto += `
+                    IBUTGMAX [°C]: ${ibutgpond.toFixed(1)} °C<br>
+                    <b>IBUTGMAX [°C] + Incremento: ${ibutgAjustado.toFixed(1)} °C</b><br>
+                    Limite de Tolerância (Quadro 1): ${limite.toFixed(1)} °C
+                    `;
+                    break;
+                }
             }
+
+            if(resultadoTexto===""){
+                resultadoTexto = "❌ Não é permitido o trabalho sem adoção de medidas de controle.";
+            }
+
+            document.getElementById("resultado").innerHTML = resultadoTexto;
         });
-
-        if(texto===""){
-            texto="❌ Não é permitido o trabalho, sem a adoção de medidas adequadas de controle.";
-        }
-
-        document.getElementById("resultado").innerHTML=texto;
-
-        });
-
     </script>
-    
 </body>
 </html>
+
 
 
 
