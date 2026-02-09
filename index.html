@@ -6,215 +6,142 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Estresse Térmico</title>
     <style>
-        * {                                        
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f6f8;
             margin: 0;
-            padding: 25px;
-            font-size: 20px;
+            padding: 15px; /* Reduzido para mobile */
+            font-size: 18px;
         }
-        .container{
-            max-width:1050px;
-            margin:auto;
+
+        .container {
+            max-width: 1050px;
+            margin: auto;
             background-image: url("Imagem de Fundo.jpeg");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            padding:25px;
-            border-radius:8px;
-            box-shadow:0 0 10px rgba(0,0,0,0.3);           
-            color:white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5); 
+            color: white;
             position: relative;
         }
-        /* Camada escura para dar contraste no texto */
-        .container::before{
-            content:"";
-            position:absolute;
-            inset:0;
-            background: rgba(0,0,0,0.55);
-            border-radius:8px;
-            z-index:0;
+
+        /* Camada escura para contraste */
+        .container::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.65);
+            border-radius: 8px;
+            z-index: 0;
         }
-        /* Faz o conteúdo ficar acima da camada escura */
-        .container > *{
-            position:relative;
-            z-index:1;
+
+        .container > * {
+            position: relative;
+            z-index: 1;
         }
-        .imagem {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px; /* Espaçamento entre imagens */
-            max-width: 100%;
-            margin: auto;
-        }
-        .imagem img {
-            max-width: 700px;  
-            width: 100%;      
-            height: auto;
-            display: block;
-            margin: 0 auto;
-        }
+
         h1 {
             text-align: center;
-            color: white;
-            font-size: 40px;
+            font-size: clamp(24px, 5vw, 40px);
+            margin-bottom: 20px;
         }
-        h2 {
-            text-align: center;
-            color: white;
-            font-size: 20px;
+
+        /* Melhoria na Grid do Formulário */
+        .form-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
         }
+
+        @media (max-width: 768px) {
+            .form-container {
+                grid-template-columns: 1fr; /* Empilha em telas pequenas */
+            }
+        }
+
         .form-group {
             margin-bottom: 15px;
-            position: relative;
         }
+
         label {
             display: block;
-            margin-bottom: 15px;
-            color: white;
+            margin-bottom: 8px;
+            font-size: 16px;
         }
-        input[type="number"],
-        select {
+
+        input[type="number"], select {
             width: 100%;
-            padding: 8px 9px;
-            border: 1px solid black;
+            padding: 12px;
+            border: 1px solid #ccc;
             border-radius: 4px;
-            font-size: 15px;
+            font-size: 16px;
         }
-        input[type="number"].error,
-        select.error {
-            border-color: red;
-            background-color: #ffe6e6;
-        }
-        .error-message {
-            color: yellow;
-            font-size: 14px;
-            margin-top: 5px;
-            display: none;
-        }
+
         button {
+            grid-column: 1 / -1; /* Botão ocupa largura total na grid */
             width: 100%;
-            padding: 9px;
+            padding: 15px;
             background-color: #007bff;
             border: none;
             color: white;
             font-size: 20px;
+            font-weight: bold;
             border-radius: 4px;
-            cursor: pointer;            
+            cursor: pointer;
+            transition: background 0.3s;
         }
-        button:hover {
-            background-color: #0056b3;
-        }
+
+        button:hover { background-color: #0056b3; }
+
         .resultado {
             margin-top: 20px;
             padding: 15px;
             border-radius: 4px;
             text-align: center;
-            color: red; 
+            color: #d9534f; 
             font-size: 25px; 
-            background-color: white;
-        }
-        footer {
-            text-align: center;
-            color: white;
-            margin-top: 30px;
-        }
-       .form-group select#Mt {
-            height: auto; 
-            max-height: 200px;            
-        }
-        select {
-            width: 100%;
-            padding: 10px; 
-            font-size: 15px; 
-            border: 1px solid #ccc; 
-            border-radius: 4px; 
-            background-color: #fff; 
-        }
-        /* Para Tablets (largura até 768px) */
-        @media (max-width: 768px) {
-            body {
-                padding: 15px;
-            }          
-            select {
-                font-size: 14px; 
-                padding: 8px; 
-            }
-            option {
-                padding: 10px; 
-            }
-            .container {
-                padding: 25px;
-            }            
-            input[type="number"],
-            select {
-                padding: 8px 2px;                              
-                font-size: 14px; 
-            }        
-            h1 {
-                font-size: 28px;
-            }
-            h2 {
-                font-size: 18px;
-            }
-            .resultado {
-                font-size: 22px;
-            }
-            .imagem img {
-                width: 100%;
-                height: auto;
-            }
-        }
-        /* Para telas pequenas (480px ou menos) */
-        @media (max-width: 480px) {
-            body {
-                padding: 10px;
-            }
-            select {
-                font-size: 12px; 
-                padding: 6px; 
-            }
-            option {
-                padding: 8px; 
-            }
-            .container {
-                padding: 20px;
-            }
-            h1 {
-                font-size: 24px;
-            }
-            h2 {
-                font-size: 16px;
-            }
-            label {
-                font-size: 14px;
-            }
-            input[type="number"],
-            select {
-                padding: 6px 10px;
-                font-size: 14px;
-            }
-            button {
-                font-size: 18px;
-                padding: 8px;
-            }
-            .resultado {
-                font-size: 20px;
-            }
-            footer {
-                margin-top: 20px;
-                font-size: 14px;
-            }
-            .imagem img {
-                width: 100%;
-                height: auto;
-            }
+            background-color: rgba(255,255,255,0.95);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
+        .imagem {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            width: 100%; /* Ocupa toda a largura disponível */
+            margin: 40px auto 20px auto;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1); /* Fundo leve para destaque */
+            border-radius: 8px;
+        }
+
+        .imagem h2 {
+            font-size: clamp(18px, 4vw, 28px); /* Título maior e dinâmico */
+            margin-bottom: 10px;
+        }
+
+        .imagem img {
+            width: 100%; /* Força a imagem a preencher o container */
+            max-width: 1000px; /* Limite máximo para não estourar em monitores 4k */
+            height: auto;
+            display: block;
+            border: 3px solid #fff;
+            border-radius: 4px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
     </style>
 </head>
 <body>
@@ -268,11 +195,11 @@
     </form>
     <div id="resultado" class="resultado"></div>
     <div class="imagem">
-        <h2>Quadro Nº 1 - Limite de Exposição</h2>
+        <h2>Quadro Nº 1 - Limite de Exposição Ocupacional</h2>
         <img src="Limite de Exposição.png">
     </div>
     <footer>
-        <p>&copy; 2026 WJBarros. Todos os direitos reservados.</p>
+        <p>&copy; 2026 WDJBarros. Todos os direitos reservados.</p>
     </footer>
     </div>
 
@@ -315,86 +242,59 @@
             {Tt:20, Td:40},
             {Tt:15, Td:45},
         ];
-
-        function obterLimite(M){
-            for(let i=0;i<QUADRO1.length-1;i++){
-                const a = QUADRO1[i];
-                const b = QUADRO1[i+1];
-                if(M>=a.m && M<=b.m){
-                    const limite = a.ibutg + ((M-a.m)*(b.ibutg-a.ibutg))/(b.m-a.m);
-                    return Number(limite.toFixed(1));
-                }
-            }
-            return QUADRO1[QUADRO1.length-1].ibutg;
+        function obterLimite(mPonderado) {
+        // Encontra o primeiro valor de M que é maior ou igual ao metabolismo ponderado
+        const faixa = QUADRO1.find(item => item.m >= mPonderado);
+        return faixa ? faixa.ibutg : 20.7; 
         }
 
-        document.getElementById("calorForm").addEventListener("submit", function(e){
-            e.preventDefault();
+        document.getElementById("calorForm").addEventListener("submit", function(e){ 
+        e.preventDefault();
+        
+        const Mt = parseFloat(document.getElementById("Mt").value);
+        const ibutgt = parseFloat(document.getElementById("ibutgt").value);
+        const ibutgd = parseFloat(document.getElementById("ibutgd").value);
+        const Iv = parseFloat(document.getElementById("Iv").value);
+        const Md = 115; // Metabolismo de descanso (taxa padrão)
 
-            const Mt = parseFloat(document.getElementById("Mt").value);
-            const ibutgt = parseFloat(document.getElementById("ibutgt").value);
-            const ibutgd = parseFloat(document.getElementById("ibutgd").value);
-            const Iv = parseFloat(document.getElementById("Iv").value);
+        if(isNaN(Mt) || isNaN(ibutgt) || isNaN(ibutgd) || isNaN(Iv)){ 
+            document.getElementById("resultado").innerHTML = "Preencha todos os campos.";
+            return;
+        }
 
-            const limite = obterLimite(Mt);
-            let resultadoTexto = "";
+        let texto = "";
 
-            for(const r of REGIMES){
+        REGIMES.forEach(r => {
+            // Ajustado para usar as chaves corretas do objeto: Tt e Td
+            const tempoTrabalho = r.Tt;
+            const tempoDescanso = r.Td;
 
-                const ibutgpond = ((ibutgt*r.Tt)+(ibutgd*r.Td))/60;
-                const ibutgAjustado = ibutgpond + Iv;
+            // Cálculo da média ponderada em 60 minutos
+            const ibutgpond = ((ibutgt * tempoTrabalho) + (ibutgd * tempoDescanso)) / 60;
+            const Mpond = ((Mt * tempoTrabalho) + (Md * tempoDescanso)) / 60;
 
-                if(ibutgAjustado <= limite){
+            const limite = obterLimite(Mpond);
+            const ibutgAjustado = ibutgpond + Iv;
 
-                    if(r.Tt === 60){
-                        resultadoTexto += `✅ <b>Autorizado o trabalho contínuo</b><br>`;
-                    }else{
-                        resultadoTexto += `✅ <b>Regime indicado: ${r.Tt} minutos de trabalho / ${r.Td} minutos de descanso</b><br>`;
-                    }
-
-                    resultadoTexto += `
-                    IBUTGMAX [°C]: ${ibutgpond.toFixed(1)} °C<br>
-                    <b>IBUTGMAX [°C] + Incremento: ${ibutgAjustado.toFixed(1)} °C</b><br>
-                    Limite de Tolerância (Quadro 1): ${limite.toFixed(1)} °C
-                    `;
-                    break;
-                }
+            if (ibutgAjustado <= limite) {
+                texto += `
+                <div style="margin-bottom: 15px; border-bottom: 1px dashed #ccc; padding-bottom: 10px;">
+                    <b>✅ Regime permitido: ${tempoTrabalho} minutos de trabalho / ${tempoDescanso} minutos de descanso</b><br>
+                    IBUTG Médio: ${ibutgpond.toFixed(1)} °C<br>
+                    IBUTG + Incremento: <b>${ibutgAjustado.toFixed(1)} °C</b><br>
+                    Metabolismo Médio (M): ${Mpond.toFixed(1)} W<br>
+                    Limite de Tolerância: ${limite.toFixed(1)} °C
+                </div>`;
             }
-
-            if(resultadoTexto===""){
-                resultadoTexto = "❌ Não é permitido o trabalho sem adoção de medidas de controle.";
-            }
-
-            document.getElementById("resultado").innerHTML = resultadoTexto;
         });
+
+        if(texto === ""){
+            texto = "<b>⚠️ Não é permitido o trabalho sem a adoção de medidas de proteção adequadas.</b>";
+        }
+
+        document.getElementById("resultado").innerHTML = texto;
+        });
+
     </script>
-</body>
+</body>        
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
