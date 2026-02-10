@@ -224,12 +224,12 @@
         ];
 
         const REGIMES = [
-            {Tt:60, Td:0},
-            {Tt:30, Td:30},
-            {Tt:25, Td:35},
-            {Tt:20, Td:40},
-            {Tt:15, Td:45},
+            {Tt:60, Td:0},{Tt:55, Td:5},{Tt:50, Td:10},
+            {Tt:45, Td:15},{Tt:40, Td:20},{Tt:30, Td:30},
+            {Tt:25, Td:35},{Tt:20, Td:40},{Tt:15, Td:45},
+            {Tt:10, Td:50},{Tt:5, Td:55},{Tt:0, Td:60}
         ];
+
         function obterLimite(mPonderado) {
         // Encontra o primeiro valor de M que é maior ou igual ao metabolismo ponderado
         const faixa = QUADRO1.find(item => item.m >= mPonderado);
@@ -237,53 +237,65 @@
         }
 
         document.getElementById("calorForm").addEventListener("submit", function(e){ 
-        e.preventDefault();
+            e.preventDefault();
         
-        const Mt = parseFloat(document.getElementById("Mt").value);
-        const ibutgt = parseFloat(document.getElementById("ibutgt").value);
-        const ibutgd = parseFloat(document.getElementById("ibutgd").value);
-        const Iv = parseFloat(document.getElementById("Iv").value);
-        const Md = 115; // Metabolismo de descanso (taxa padrão)
+            const Mt = parseFloat(document.getElementById("Mt").value);
+            const ibutgt = parseFloat(document.getElementById("ibutgt").value);
+            const ibutgd = parseFloat(document.getElementById("ibutgd").value);
+            const Iv = parseFloat(document.getElementById("Iv").value);
+            const Md = 115; // Metabolismo de descanso (taxa padrão)
 
-        if(isNaN(Mt) || isNaN(ibutgt) || isNaN(ibutgd) || isNaN(Iv)){ 
-            document.getElementById("resultado").innerHTML = "Preencha todos os campos.";
-            return;
-        }
-
-        let texto = "";
-
-        REGIMES.forEach(r => {
-            // Ajustado para usar as chaves corretas do objeto: Tt e Td
-            const tempoTrabalho = r.Tt;
-            const tempoDescanso = r.Td;
-
-            // Cálculo da média ponderada em 60 minutos
-            const ibutgpond = ((ibutgt * tempoTrabalho) + (ibutgd * tempoDescanso)) / 60;
-            const Mpond = ((Mt * tempoTrabalho) + (Md * tempoDescanso)) / 60;
-
-            const limite = obterLimite(Mpond);
-            const ibutgAjustado = ibutgpond + Iv;
-
-            if (ibutgAjustado <= limite) {
-                texto += `
-                <div style="margin-bottom: 15px; border-bottom: 1px dashed #ccc; padding-bottom: 10px;">
-                    <b>✅ Regime permitido: ${tempoTrabalho} minutos de trabalho / ${tempoDescanso} minutos de descanso</b><br>
-                    IBUTG Médio: ${ibutgpond.toFixed(1)} °C<br>
-                    IBUTG + Incremento: <b>${ibutgAjustado.toFixed(1)} °C</b><br>
-                    Metabolismo Médio (M): ${Mpond.toFixed(1)} W<br>
-                    Limite de Tolerância: ${limite.toFixed(1)} °C
-                </div>`;
+            if(isNaN(Mt) || isNaN(ibutgt) || isNaN(ibutgd) || isNaN(Iv)){ 
+                document.getElementById("resultado").innerHTML = "Preencha todos os campos.";
+                return;
             }
-        });
 
-        if(texto === ""){
-            texto = "<b>⚠️ Não é permitido o trabalho sem a adoção de medidas de proteção adequadas.</b>";
-        }
+            let resultadoFinal = "";
 
-        document.getElementById("resultado").innerHTML = texto;
-        });
+            for (const r of REGIMES) {
+                // Ajustado para usar as chaves corretas do objeto: Tt e Td
+                const Tt = r.Tt;
+                const Td = r.Td;
 
+                // Cálculo da média ponderada em 60 minutos
+                const ibutgpond = ((ibutgt * Tt) + (ibutgd * Td)) / 60;
+                const Mpond = ((Mt * Tt) + (Md * Td)) / 60;
+
+                const limite = obterLimite(Mpond);
+                const ibutgAjustado = ibutgpond + Iv;
+
+                if (ibutgAjustado <= limite) {
+
+                    let frase = "";                                    
+              
+                    if (Tt > 45) {
+                        frase = "✅ <b>Autorizado o trabalho contínuo</b>";                       
+                                                       
+                    }
+                    else if (Td > 40){
+                        frase = "⚠️ <b>Não é permitido o trabalho sem a adoção de medidas de proteção adequadas</b>";                        
+                    }
+                    else{
+                        frase = `✅ <b>Regime indicado: ${Tt} minutos de trabalho / ${Td} minutos de descanso</b>`;
+                        
+                    }
+
+                    resultadoFinal = `
+                    <div style="margin-bottom: 15px; border-bottom: 1px dashed #ccc; padding-bottom: 10px;">
+                        ${frase}<br><br>
+                        IBUTG [°C]: ${ibutgpond.toFixed(1)} °C<br>
+                        IBUTG [°C] + Incremento: <b>${ibutgAjustado.toFixed(1)} °C</b><br>
+                        M [W]: ${Mpond.toFixed(1)} W<br>
+                        Limite de Tolerância: ${limite.toFixed(1)} °C
+                    </div>`;
+                    break;                   
+                }              
+            }
+           
+        document.getElementById("resultado").innerHTML = resultadoFinal;
+    });
     </script>
 </body>        
 </html>
+
 
