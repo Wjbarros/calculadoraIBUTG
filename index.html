@@ -7,6 +7,7 @@
     <title>Calculadora de Estresse Térmico</title>
     <style>
         * { box-sizing: border-box; }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f6f8;
@@ -14,6 +15,7 @@
             padding: 15px; /* Reduzido para mobile */
             font-size: 18px;
         }
+
         .container {
             max-width: 1050px;
             margin: auto;
@@ -27,6 +29,7 @@
             color: white;
             position: relative;
         }
+
         /* Camada escura para contraste */
         .container::before {
             content: "";
@@ -36,15 +39,18 @@
             border-radius: 8px;
             z-index: 0;
         }
+
         .container > * {
             position: relative;
             z-index: 1;
         }
+
         h1 {
             text-align: center;
             font-size: clamp(24px, 5vw, 40px);
             margin-bottom: 20px;
-        }        
+        }
+
         h2 {
             text-align: center;
             font-size: clamp(24px, 5vw, 40px);
@@ -56,19 +62,23 @@
             grid-template-columns: 1fr 1fr;
             gap: 15px;
         }
+
         @media (max-width: 768px) {
             .form-container {
                 grid-template-columns: 1fr; /* Empilha em telas pequenas */
             }
         }
+
         .form-group {
             margin-bottom: 15px;
         }
+
         label {
             display: block;
             margin-bottom: 8px;
             font-size: 16px;
         }
+
         input[type="number"], select {
             width: 100%;
             padding: 12px;
@@ -76,6 +86,7 @@
             border-radius: 4px;
             font-size: 16px;
         }
+
         button {
             grid-column: 1 / -1; /* Botão ocupa largura total na grid */
             width: 100%;
@@ -89,7 +100,9 @@
             cursor: pointer;
             transition: background 0.3s;
         }
+
         button:hover { background-color: #0056b3; }
+
         .resultado {
             margin-top: 20px;
             padding: 15px;
@@ -100,6 +113,7 @@
             background-color: rgba(255,255,255,0.95);
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
+
         .imagem {
             display: flex;
             flex-direction: column;
@@ -111,10 +125,12 @@
             background: rgba(255, 255, 255, 0.1); /* Fundo leve para destaque */
             border-radius: 8px;
         }
+
         .imagem h2 {
             font-size: clamp(18px, 4vw, 28px); /* Título maior e dinâmico */
             margin-bottom: 10px;
         }
+
         .imagem img {
             width: 100%; /* Força a imagem a preencher o container */
             max-width: 1000px; /* Limite máximo para não estourar em monitores 4k */
@@ -124,6 +140,7 @@
             border-radius: 4px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
+
         footer {
             text-align: center;
             margin-top: 30px;
@@ -170,16 +187,24 @@
             </select>
         </div>
         <div class="form-group">
-            <label>IBUTGt (°C)</label>
+            <label>IBUTGt (°C):</label>
             <input type="number" id="ibutgt" step="0.1" required>
         </div>
         <div class="form-group">
-            <label>IBUTGd (°C)</label>
+            <label>IBUTGd (°C):</label>
             <input type="number" id="ibutgd" step="0.1" required>
         </div>
         <div class="form-group">
+            <label>Incremento de Capuz (°C):</label>
+            <select id="IvCapuz" name="IvCapuz" required>
+                <option value="">Selecione</option>
+                <option value=>Sem capuz</option>
+                <option value="1">Com capuz: 1</option>
+            </select>
+        </div> 
+        <div class="form-group">
             <button type="submit">Calcular</button>
-        </div>
+        </div> 
     </form>
     <div id="resultado" class="resultado"></div>
     <div class="imagem">
@@ -231,19 +256,46 @@
         ];
 
         function obterLimite(mPonderado) {
-        // Encontra o primeiro valor de M que é maior ou igual ao metabolismo ponderado
-        const faixa = QUADRO1.find(item => item.m >= mPonderado);
-        return faixa ? faixa.ibutg : 20.7; 
+
+            // Se estiver abaixo do menor valor da tabela
+            if (mPonderado <= QUADRO1[0].m) {
+                return QUADRO1[0].ibutg;
+            }
+
+            // Se estiver acima do maior valor da tabela
+            if (mPonderado >= QUADRO1[QUADRO1.length - 1].m) {
+                return QUADRO1[QUADRO1.length - 1].ibutg;
+            }
+
+            // Procurar os dois pontos entre os quais o M está
+            for (let i = 0; i < QUADRO1.length - 1; i++) {
+
+                const M1 = QUADRO1[i].m;
+                const M2 = QUADRO1[i + 1].m;
+
+                if (mPonderado >= M1 && mPonderado <= M2) {
+
+                    const L1 = QUADRO1[i].ibutg;
+                    const L2 = QUADRO1[i + 1].ibutg;
+
+                    // Interpolação Linear
+                    const limiteInterpolado =
+                        L1 + ((mPonderado - M1) / (M2 - M1)) * (L2 - L1);
+
+                    return limiteInterpolado;
+                }
+            }
         }
 
-        document.getElementById("calorForm").addEventListener("submit", function(e){ 
+       document.getElementById("calorForm").addEventListener("submit", function(e){ 
             e.preventDefault();
-        
+
             const Mt = parseFloat(document.getElementById("Mt").value);
             const ibutgt = parseFloat(document.getElementById("ibutgt").value);
             const ibutgd = parseFloat(document.getElementById("ibutgd").value);
             const Iv = parseFloat(document.getElementById("Iv").value);
-            const Md = 115; // Metabolismo de descanso (taxa padrão)
+            const IvCapuz = parseFloat(document.getElementById("IvCapuz").value) || 0;
+            const Md = 115; // Metabolismo de descanso
 
             if(isNaN(Mt) || isNaN(ibutgt) || isNaN(ibutgd) || isNaN(Iv)){ 
                 document.getElementById("resultado").innerHTML = "Preencha todos os campos.";
@@ -252,48 +304,51 @@
 
             let resultadoFinal = "";
 
-            for (const r of REGIMES) {
-                // Ajustado para usar as chaves corretas do objeto: Tt e Td
+           for (const r of REGIMES) {
+
                 const Tt = r.Tt;
                 const Td = r.Td;
 
-                // Cálculo da média ponderada em 60 minutos
                 const ibutgpond = ((ibutgt * Tt) + (ibutgd * Td)) / 60;
                 const Mpond = ((Mt * Tt) + (Md * Td)) / 60;
 
                 const limite = obterLimite(Mpond);
-                const ibutgAjustado = ibutgpond + Iv;
+                const ibutgAjustado = ibutgpond + Iv + IvCapuz;
 
                 if (ibutgAjustado <= limite) {
 
-                    let frase = "";                                    
-              
-                    if (Tt > 45) {
-                        frase = "✅ <b>Autorizado o trabalho contínuo</b>";                       
-                                                       
+                    // Regras apenas de exibição (não técnica)
+                    
+                    if (Td > 45){
+                        resultadoFinal = `
+                        <div>
+                            ⚠️ <b>Não é permitido o trabalho sem a adoção de medidas de proteção adequadas</b>
+                        </div>`;
+                        break;
                     }
-                    else if (Td > 45){
-                        frase = "⚠️ <b>Não é permitido o trabalho sem a adoção de medidas de proteção adequadas</b>";                        
-                    }
-                    else{
-                        frase = `✅ <b>Regime indicado: ${Tt} minutos de trabalho / ${Td} minutos de descanso</b>`;
-                        
+
+                    if (Tt > 45){
+                        resultadoFinal = `
+                        <div>
+                            ✅ <b>Autorizado o trabalho contínuo</b>
+                        </div>`;
+                        break;
                     }
 
                     resultadoFinal = `
-                    <div style="margin-bottom: 15px; border-bottom: 1px dashed #ccc; padding-bottom: 10px;">
-                        ${frase}<br><br>
-                        IBUTG [°C]: ${ibutgpond.toFixed(1)} °C<br>
-                        IBUTG [°C] + Incremento: <b>${ibutgAjustado.toFixed(1)} °C</b><br>
-                        M [W]: ${Mpond.toFixed(1)} W<br>
-                        Limite de Tolerância: ${limite.toFixed(1)} °C
+                    <div>
+                        ✅ <b>Regime indicado: ${Tt} minutos de trabalho / ${Td} minutos de descanso</b><br><br>
+                        IBUTG médio: ${ibutgpond.toFixed(2)} °C<br>
+                        IBUTG + Incrementos: <b>${ibutgAjustado.toFixed(2)} °C</b><br>
+                        M ponderado: ${Mpond.toFixed(2)} W<br>
+                        Limite de tolerância: ${limite.toFixed(2)} °C
                     </div>`;
-                    break;                   
-                }              
+                    break;
+                }
             }
-           
-        document.getElementById("resultado").innerHTML = resultadoFinal;
-    });
+
+            document.getElementById("resultado").innerHTML = resultadoFinal;
+        });
     </script>
 </body>        
 </html>
